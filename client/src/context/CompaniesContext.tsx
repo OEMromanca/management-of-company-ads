@@ -73,8 +73,6 @@ export function CompaniesProvider({ children }: { children: ReactNode }) {
   const [adsLimit, setAdsLimit] = useState(10);
   const [adsTotal, setAdsTotal] = useState(0);
 
-  console.log(adsTotal);
-
   const MAX_FILE_SIZE = 2 * 1024 * 1024;
 
   const handleChange = useCallback(
@@ -115,9 +113,6 @@ export function CompaniesProvider({ children }: { children: ReactNode }) {
 
       try {
         const data = await fetchAllAds(page + 1, limit);
-
-        console.log(data);
-
         setAds(data.ads || []);
         setAdsTotal(data.total || 0);
         setAdsPage((data.page ?? 1) - 1);
