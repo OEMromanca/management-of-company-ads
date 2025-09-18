@@ -81,10 +81,9 @@ export const getAllAds = async (req: Request, res: Response) => {
     const limit = parseInt(req.query.limit as string) || 10;
     const skip = (page - 1) * limit;
 
-    const [companies, total] = await Promise.all([
-      CompanyModel.find({ "adverts.0": { $exists: true } }),
-      CompanyModel.countDocuments({ "adverts.0": { $exists: true } }),
-    ]);
+    const companies = await CompanyModel.find({
+      "adverts.0": { $exists: true },
+    });
 
     const adsUnsorted = companies.flatMap((c) =>
       c.adverts.map((adv) => ({
@@ -100,6 +99,7 @@ export const getAllAds = async (req: Request, res: Response) => {
       }))
     );
 
+    const total = adsUnsorted.length;
     const adsSorted = sortAds(adsUnsorted).slice(skip, skip + limit);
 
     res.json({
