@@ -34,11 +34,9 @@ export const searchCompanies = async (req: Request, res: Response) => {
 
       return res.json(companies);
     }
-  } catch (err: any) {
-    console.error("❌ Error during search:", err.message || err);
-    return res
-      .status(400)
-      .json({ error: err.message || "Error during search" });
+  } catch (err) {
+    console.error("❌ Error during search:", err);
+    return res.status(400).json({ error: "Error during search" });
   }
 };
 

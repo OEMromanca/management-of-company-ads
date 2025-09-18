@@ -50,7 +50,7 @@ export const fetchAndSaveCompanies = async () => {
       console.log(
         `✅ Processed business entities for city: ${city}, count: ${companiesToInsert.length}`
       );
-    } catch (err: unknown) {
+    } catch (err) {
       if (axios.isAxiosError(err)) {
         console.error(
           `❌ Fetch error for city ${city}:`,
