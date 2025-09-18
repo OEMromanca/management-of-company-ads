@@ -2,11 +2,11 @@
 
 **Clone the repo**
 
-- git clone <PROJECT_URL>
+- git clone [<PROJECT_URL>](https://github.com/OEMromanca/management-of-company-ads.git)
 
 **Open the project**
 
-- cd <project-name>
+- cd Advertisement-Management-ts-app
 
 **Install dependencies**
 
@@ -51,3 +51,6 @@ The project uses the following endpoints:
 
 - **Fetching Data from the RPO API**  
   To fetch data from the RPO API, a custom function was created that returns data in the desired format and selects only the properties needed for the application. This allowed for easy integration and minimized unnecessary data.
+
+- **FE application**
+  The functionality includes adding advertisements, where a modal window opens with a form. In the form, there is the option to search for companies by name or by ICO, add an advertisement and the company logo. A toast notification indicates whether the advertisement was successfully submitted; if not, it returns an error. Furthermore, there is the possibility to edit the advertisement, download a PDF file, mark an advertisement as top, and delete an advertisement. The application also includes pagination.
