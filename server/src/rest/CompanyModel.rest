@@ -1,0 +1,34 @@
+  
+###
+GET http://localhost:5000/api/companies/search?query=Pet
+Content-Type: application/json
+
+###
+GET http://localhost:5000/api/companies/search?ico=48060551
+Content-Type: application/json
+ 
+###
+GET http://localhost:5000/api/companies/ads?page=1&limit=5
+Content-Type: application/json
+
+###
+DELETE http://localhost:5000/api/companies/ads/68ca815831d89791180a2eeb
+Content-Type: application/json
+
+###  
+PUT http://localhost:5000/api/companies/ads/68ca852cb30be8e2d3751aad
+Content-Type: application/json
+
+{
+  "adText": "Toto je upravený text inzerátu"
+}
+
+###  
+PATCH http://localhost:5000/api/companies/ads/top/68caa7129bd012b18711e7dd
+Content-Type: application/json
+
+{
+  "top": true
+}
+
+ 
