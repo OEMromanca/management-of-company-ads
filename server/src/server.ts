@@ -3,7 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import companyRouter from "./routes/companyModelRoutes";
-//import { fetchAndSaveCompanies } from "./services/companyModelService";
+import { fetchAndSaveCompanies } from "./services/companyModelService";
 
 const app = express();
 
@@ -27,6 +27,6 @@ app.listen(PORT, () => {
   console.log(`🚀 Server beží na porte ${PORT}`);
 });
 
-// fetchAndSaveCompanies().catch((err: unknown) =>
-//   console.error('❌ Chyba pri fetchovaní firiem:', err)
-// );
+fetchAndSaveCompanies().catch((err: unknown) =>
+  console.error("❌ Chyba pri fetchovaní firiem:", err)
+);

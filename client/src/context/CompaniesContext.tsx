@@ -129,7 +129,7 @@ export function CompaniesProvider({ children }: { children: ReactNode }) {
         }
       }
     },
-    [adsPage, adsLimit]
+    [adsLimit]
   );
 
   const handleChangePage = useCallback(
