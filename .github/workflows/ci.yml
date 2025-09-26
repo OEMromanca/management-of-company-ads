@@ -34,28 +34,25 @@ jobs:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm run build-all
 
-      # ==== Start server na pozadí ====
-      - name: Start server
+      # ==== Start server a počkaj, kým bude dostupný ====
+      - name: Start server and wait
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
-        run: nohup npm run start-server > server.log 2>&1 &
+        run: |
+          nohup npm run start-server > server.log 2>&1 &
+          npx wait-on http://localhost:5000 --timeout 60000
 
-      # ==== Start client na pozadí ====
-      - name: Start client
-        run: nohup npm run start-client > client.log 2>&1 &
-
-      # ==== Počkaj, kým server a client budú dostupní ====
-      - name: Wait for server
-        run: npx wait-on http://localhost:5000 --timeout 30000
-
-      - name: Wait for client
-        run: npx wait-on http://localhost:5173 --timeout 30000
+      # ==== Start client a počkaj, kým bude dostupný ====
+      - name: Start client and wait
+        run: |
+          nohup npm run start-client > client.log 2>&1 &
+          npx wait-on http://localhost:5173 --timeout 60000
 
       # ==== Spusti Cypress testy ====
       - name: Run Cypress tests
         run: npx cypress run --browser ${{ matrix.browser }}
 
-      # ==== Debug logy (voliteľné) ====
+      # ==== Debug logy, ak testy zlyhajú ====
       - name: Show server log
         if: failure()
         run: cat server.log
