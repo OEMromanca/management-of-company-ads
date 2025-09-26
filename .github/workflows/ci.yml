@@ -14,33 +14,33 @@ jobs:
         browser: [chrome, firefox, electron]
 
     steps:
-      # Checkout code
+      # Checkout repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Setup Node.js
+      # Node.js setup
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # Install dependencies globally (root)
+      # Install dependencies globally
       - name: Install dependencies
         run: npm ci
 
-      # Build server
+      # Build server + client
       - name: Build server and client
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm run build-all
 
-      # Start server
-      - name: Start server and client in background
+      # Start server only in background
+      - name: Start server in background
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: |
-          nohup npm run dev > dev.log 2>&1 & 
-          npx wait-on http://localhost:5000 --timeout 30000
+          nohup npm run start-server > server.log 2>&1 &
+          npx wait-on http://localhost:5000 --timeout 60000
 
       # Run Cypress tests
       - name: Run Cypress tests
