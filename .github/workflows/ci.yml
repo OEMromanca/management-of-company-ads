@@ -30,7 +30,11 @@ jobs:
       - name: Start server in background
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
+          PORT: 5000
         run: nohup npm run start-server > server.log 2>&1 &
+
+      - name: Show startup log
+        run: sleep 5 && cat server.log || true
 
       - name: Wait for server
         run: npx wait-on http://localhost:5000 --timeout 120000
@@ -38,6 +42,7 @@ jobs:
       - name: Run Cypress tests
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
+          PORT: 5000
         run: npm run cy:run
 
       - name: Show server log if failure
