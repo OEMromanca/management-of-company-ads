@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chrome, firefox, elctron]
+        browser: [chrome, firefox, electron]
 
     steps:
       - name: Checkout repository
@@ -30,8 +30,7 @@ jobs:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm run build-all
 
-      # ==== Start backend in background ====
-      - name: Start server
+      - name: Start server in background
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm run start-server &
