@@ -15,7 +15,7 @@
     "convert-font": "ts-node scripts/convert-font.cjs",
     "dev": "concurrently \"npm run start-client\" \"npm run start-server\"",
     "build-all": "npm run build-server && npm run build-client",
-    "test:cy": "start-server-and-test start-server http://localhost:5000 --timeout 120000 'npx cypress run --browser $npm_config_browser'"
+    "test:cy": "start-server-and-test start-server http://localhost:5000 120000 npx cypress run --browser $npm_config_browser"
   },
   "devDependencies": {
     "@types/pdfmake": "^0.2.11",
