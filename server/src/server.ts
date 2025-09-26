@@ -26,7 +26,7 @@ mongoose
 
 app.use("/api/companies", companyRouter);
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT ? Number(process.env.PORT) : 5000;
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Server beží na porte ${PORT}`);
 });
