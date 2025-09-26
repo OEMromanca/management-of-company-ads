@@ -1,4 +1,18 @@
-// declare module "pdfmake/interfaces";
-// declare module "pdfmake/build/vfs_fonts";
-// declare module "pdfmake/build/pdfmake";
-// declare module "react-to-pdf";
+/// <reference types="vite/client" />
+/// <reference types="vite/types/importMeta.d.ts" />
+
+declare module "*.css";
+declare module "*.scss";
+declare module "*.sass";
+declare module "*.png";
+declare module "*.jpg";
+
+interface ImportMetaEnv {
+  readonly VITE_YOUR_URL: string;
+  readonly VITE_REALM: string;
+  readonly VITE_CLIENT_ID: string;
+}
+
+interface ImportMeta {
+  readonly env: ImportMetaEnv;
+}

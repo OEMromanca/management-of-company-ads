@@ -3,5 +3,9 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
-  ]
+  ],
+  "include": ["src", "vite-env.d.ts"],
+  "compilerOptions": {
+    "composite": true
+  }
 }
