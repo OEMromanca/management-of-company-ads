@@ -38,9 +38,6 @@ jobs:
       - name: Show startup log
         run: sleep 10 && cat server.log || true
 
-      - name: Wait for server
-        run: npx wait-on http://localhost:5000 --timeout 180000 --interval 5000
-
       - name: Run Cypress tests
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
