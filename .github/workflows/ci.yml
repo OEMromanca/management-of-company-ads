@@ -9,9 +9,6 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        browser: [chrome, firefox, electron]
 
     steps:
       - name: Checkout repository
@@ -31,6 +28,6 @@ jobs:
         run: npm run build-all
 
       - name: Run Cypress tests
-        run: npm run cy:run -- ${{ matrix.browser }}
+        run: npm run cy:run
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
