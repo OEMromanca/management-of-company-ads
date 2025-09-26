@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -30,10 +30,23 @@ jobs:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm run build-all
 
-      - name: Start project
+      # ==== Start server na pozadí ====
+      - name: Start server
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
-        run: npm run dev
+        run: npm run start-server &
 
+      # ==== Start client na pozadí ====
+      - name: Start client
+        run: npm run start-client &
+
+      # ==== Počkaj, kým server a client budú dostupní ====
+      - name: Wait for server
+        run: npx wait-on http://localhost:5000
+
+      - name: Wait for client
+        run: npx wait-on http://localhost:5173
+
+      # ==== Spusti Cypress testy ====
       - name: Run Cypress tests
         run: npx cypress run --browser ${{ matrix.browser }}
