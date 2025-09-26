@@ -14,49 +14,23 @@ jobs:
         browser: [chrome, firefox, electron]
 
     steps:
-      # ==== Checkout repo ====
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # ==== Setup Node.js ====
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # ==== Install dependencies ====
       - name: Install dependencies
         run: npm ci
 
-      # ==== Build server and client ====
       - name: Build server and client
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm run build-all
 
-      # ==== Start server a počkaj, kým bude dostupný ====
-      - name: Start server and wait
+      - name: Run Cypress tests
+        run: npm run test:cy --browser ${{ matrix.browser }}
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
-        run: |
-          nohup npm run start-server > server.log 2>&1 &
-          npx wait-on http://localhost:5000 --timeout 60000
-
-      # ==== Start client a počkaj, kým bude dostupný ====
-      - name: Start client and wait
-        run: |
-          nohup npm run start-client > client.log 2>&1 &
-          npx wait-on http://localhost:5173 --timeout 60000
-
-      # ==== Spusti Cypress testy ====
-      - name: Run Cypress tests
-        run: npx cypress run --browser ${{ matrix.browser }}
-
-      # ==== Debug logy, ak testy zlyhajú ====
-      - name: Show server log
-        if: failure()
-        run: cat server.log
-
-      - name: Show client log
-        if: failure()
-        run: cat client.log
