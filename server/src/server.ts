@@ -25,6 +25,7 @@ mongoose
   .catch((err) => console.error("❌ Chyba pripojenia:", err));
 
 app.use("/api/companies", companyRouter);
+app.get("/api/health", (_, res) => res.sendStatus(200));
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 5000;
 app.listen(PORT, "0.0.0.0", () => {

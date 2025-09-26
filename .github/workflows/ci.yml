@@ -39,7 +39,7 @@ jobs:
           nohup node server/dist/server.js > server.log 2>&1 &
 
       - name: Wait for server to be ready
-        run: wait-on http://localhost:5000
+        run: wait-on http://localhost:5000/api/health
 
       - name: Run Cypress tests
         working-directory: ./client
