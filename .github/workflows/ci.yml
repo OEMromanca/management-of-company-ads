@@ -19,23 +19,10 @@ jobs:
         with:
           node-version: 18
 
-      # ==== SERVER ====
-      - name: Install server dependencies
-        working-directory: ./server
+      - name: Install dependencies
         run: npm ci
 
-      - name: Build server
-        working-directory: ./server
+      - name: Build server and client
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
-
-        run: npm run build-server
-
-      # ==== CLIENT ====
-      - name: Install client dependencies
-        working-directory: ./client
-        run: npm ci
-
-      - name: Build client
-        working-directory: ./client
-        run: npm run build-client
+        run: npm run build-all
