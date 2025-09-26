@@ -10,10 +10,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18]
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -21,17 +17,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
       # ==== SERVER ====
-      - name: Cache server dependencies
-        uses: actions/cache@v3
-        with:
-          path: server/node_modules
-          key: server-node-modules-${{ hashFiles('server/package-lock.json') }}
-          restore-keys: |
-            server-node-modules-
-
       - name: Install server dependencies
         working-directory: ./server
         run: npm ci
@@ -40,17 +28,10 @@ jobs:
         working-directory: ./server
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
-        run: npm run build-server
+
+        run: npm run build-server>
 
       # ==== CLIENT ====
-      - name: Cache client dependencies
-        uses: actions/cache@v3
-        with:
-          path: client/node_modules
-          key: client-node-modules-${{ hashFiles('client/package-lock.json') }}
-          restore-keys: |
-            client-node-modules-
-
       - name: Install client dependencies
         working-directory: ./client
         run: npm ci
@@ -58,12 +39,3 @@ jobs:
       - name: Build client
         working-directory: ./client
         run: npm run build-client
-
-      # ==== PLACEHOLDER TESTS ====
-      - name: Run server tests
-        working-directory: ./server
-        run: echo "Server tests not implemented yet"
-
-      - name: Run client tests
-        working-directory: ./client
-        run: echo "Client tests not implemented yet"
