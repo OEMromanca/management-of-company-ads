@@ -28,7 +28,7 @@ jobs:
         working-directory: ./server
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
-        run: npm run build
+        run: npm run build-server
 
       # ==== CLIENT ====
       - name: Install client dependencies
@@ -37,4 +37,4 @@ jobs:
 
       - name: Build client
         working-directory: ./client
-        run: npm run build
+        run: npm run build-client
