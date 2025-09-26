@@ -7,41 +7,33 @@ on:
     branches: [main]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         browser: [chrome, firefox, electron]
 
     steps:
-      # Checkout repo
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Node.js setup
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      # Install dependencies globally
       - name: Install dependencies
         run: npm ci
 
-      # Build server + client
       - name: Build server and client
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm run build-all
 
-      # Start server only in background
-      - name: Start server in background
+      - name: Start project
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
-        run: |
-          nohup npm run start-server > server.log 2>&1 &
-          npx wait-on http://localhost:5000 --timeout 60000
+        run: npm run dev
 
-      # Run Cypress tests
       - name: Run Cypress tests
         run: npx cypress run --browser ${{ matrix.browser }}
