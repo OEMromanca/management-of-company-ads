@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chrome, firefox, edge]
+        browser: [chrome, firefox, elctron]
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -28,6 +29,15 @@ jobs:
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm run build-all
+
+      # ==== Start backend in background ====
+      - name: Start server
+        env:
+          MONGO_URI: ${{ secrets.MONGO_URI }}
+        run: npm run start-server &
+
+      - name: Wait for server to be ready
+        run: npx wait-on http://localhost:5000
 
       - name: Run Cypress tests
         run: npx cypress run --browser ${{ matrix.browser }}
