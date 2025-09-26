@@ -27,27 +27,36 @@ jobs:
           MONGO_URI: ${{ secrets.MONGO_URI }}
         run: npm run build-all
 
-      - name: Install wait-on
-        run: npm install -g wait-on
+      - name: Install wait-on and serve
+        run: npm install -g wait-on serve
 
-      - name: Start server in background
+      - name: Start backend server
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           PORT: 5000
         run: |
-          echo "Starting built server..."
+          echo "Starting backend server..."
           nohup node server/dist/server.js > server.log 2>&1 &
 
-      - name: Wait for server to be ready
+      - name: Serve frontend
+        working-directory: ./client
+        run: |
+          echo "Serving frontend..."
+          npx serve -s dist -l 5173 &
+
+      - name: Wait for backend
         run: wait-on http://localhost:5000/api/health
+
+      - name: Wait for frontend
+        run: wait-on http://localhost:5173
 
       - name: Run Cypress tests
         working-directory: ./client
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           PORT: 5000
-        run: npx cypress run
+        run: npx cypress run --config-file cypress.config.ts
 
-      - name: Show server log if failure
+      - name: Show backend server log if failure
         if: failure()
         run: cat server.log
