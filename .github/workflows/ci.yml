@@ -31,7 +31,7 @@ jobs:
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           PORT: 5000
-        run: nohup npm run start-prod > server.log 2>&1 &
+        run: nohup npm run start-server:prod > server.log 2>&1 &
 
       - name: Show startup log
         run: sleep 5 && cat server.log || true
