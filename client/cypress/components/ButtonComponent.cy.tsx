@@ -18,7 +18,7 @@ describe("<ButtonComponent /> reusable", () => {
   it("applies custom sx styles", () => {
     cy.mount(
       <ButtonComponent sx={{ backgroundColor: "rgb(0, 128, 0)" }}>
-        Styled
+        Styled...
       </ButtonComponent>
     );
     cy.get("button").should("have.css", "background-color", "rgb(0, 128, 0)");
