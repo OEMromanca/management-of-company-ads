@@ -1,10 +1,10 @@
 import { Box, Container, Typography } from "@mui/material";
-import ButtonComponent from "../../cypress/components/ButtonComponent";
 import FormInputComponent from "./FormInputComponent";
 import { useCompaniesContext } from "../context/CompaniesContext";
 import { useModal } from "../context/ModalContext";
 import { useEffect } from "react";
 import type { EditAdFormProps } from "../types/types";
+import ButtonComponent from "./ButtonComponent";
 
 export default function EditAdFormComponent({
   advertId,

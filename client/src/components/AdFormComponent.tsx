@@ -6,13 +6,13 @@ import {
   CircularProgress,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
-import ButtonComponent from "../../cypress/components/ButtonComponent";
 import type { Company } from "../types/types";
 import FormInputComponent from "./FormInputComponent";
 import { useCompaniesContext } from "../context/CompaniesContext";
 import { useModal } from "../context/ModalContext";
 import { highlightMatch } from "../utils/utils";
 import ClearIcon from "@mui/icons-material/Clear";
+import ButtonComponent from "./ButtonComponent";
 
 export default function AdFormComponent() {
   const {

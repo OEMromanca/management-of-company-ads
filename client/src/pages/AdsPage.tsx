@@ -1,6 +1,5 @@
 import { Typography, CircularProgress, Box } from "@mui/material";
 import TableComponent from "../components/TableComponent";
-import ButtonComponent from "../../cypress/components/ButtonComponent";
 import { generatePDF } from "../utils/pdfGenerator";
 import { useCompaniesContext } from "../context/CompaniesContext";
 import type { Column, IAds } from "../types/types";
@@ -12,6 +11,7 @@ import EditAdFormComponent from "../components/EditAdFormComponent";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import StarIcon from "@mui/icons-material/Star";
 import DownloadIcon from "@mui/icons-material/Download";
+import ButtonComponent from "../components/ButtonComponent";
 
 export default function AdsPage() {
   const {

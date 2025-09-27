@@ -1,8 +1,8 @@
 import { useCompaniesContext } from "../context/CompaniesContext";
 import { useModal } from "../context/ModalContext";
 import type { DeleteAdComponentProps } from "../types/types";
-import ButtonComponent from "../../cypress/components/ButtonComponent";
 import { Box, Stack, Typography } from "@mui/material";
+import ButtonComponent from "./ButtonComponent";
 
 export default function DeleteAdComponent({
   advertId,
