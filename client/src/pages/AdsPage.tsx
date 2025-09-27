@@ -1,6 +1,6 @@
 import { Typography, CircularProgress, Box } from "@mui/material";
 import TableComponent from "../components/TableComponent";
-import ButtonComponent from "../components/ButtonComponent";
+import ButtonComponent from "../../cypress/components/ButtonComponent";
 import { generatePDF } from "../utils/pdfGenerator";
 import { useCompaniesContext } from "../context/CompaniesContext";
 import type { Column, IAds } from "../types/types";

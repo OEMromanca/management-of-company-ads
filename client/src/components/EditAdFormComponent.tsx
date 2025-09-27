@@ -1,5 +1,5 @@
 import { Box, Container, Typography } from "@mui/material";
-import ButtonComponent from "./ButtonComponent";
+import ButtonComponent from "../../cypress/components/ButtonComponent";
 import FormInputComponent from "./FormInputComponent";
 import { useCompaniesContext } from "../context/CompaniesContext";
 import { useModal } from "../context/ModalContext";

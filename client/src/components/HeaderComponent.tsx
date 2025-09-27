@@ -1,7 +1,7 @@
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import ButtonComponent from "./ButtonComponent";
+import ButtonComponent from "../../cypress/components/ButtonComponent";
 import { useModal } from "../context/ModalContext";
 import AdFormComponent from "./AdFormComponent";
 import AddIcon from "@mui/icons-material/Add";

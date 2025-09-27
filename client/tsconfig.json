@@ -1,20 +1,16 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  "include": ["src", "vite-env.d.ts"],
   "compilerOptions": {
     "target": "ES2022",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
+    "module": "CommonJS",
     "jsx": "react-jsx",
     "strict": true,
-    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "composite": true
-  }
+    "types": ["cypress", "node", "jest"],
+    "moduleResolution": "node",
+    "esModuleInterop": true
+  },
+  "include": ["src", "cypress"],
+  "exclude": ["node_modules"]
 }

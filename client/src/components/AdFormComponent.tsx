@@ -6,7 +6,7 @@ import {
   CircularProgress,
 } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
-import ButtonComponent from "./ButtonComponent";
+import ButtonComponent from "../../cypress/components/ButtonComponent";
 import type { Company } from "../types/types";
 import FormInputComponent from "./FormInputComponent";
 import { useCompaniesContext } from "../context/CompaniesContext";

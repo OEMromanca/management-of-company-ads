@@ -27,7 +27,11 @@
     "wait-on": "^9.0.1"
   },
   "dependencies": {
+    "@types/react": "^18.3.24",
+    "@types/react-dom": "^18.3.7",
     "pdfmake": "^0.2.20",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "typeface-roboto": "^1.1.13"
   }
 }

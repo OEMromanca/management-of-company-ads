@@ -2,7 +2,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
-import ButtonComponent from "./ButtonComponent";
+import ButtonComponent from "../../cypress/components/ButtonComponent";
 import type { ReusableModalProps } from "../types/types";
 
 export default function ModalComponent({

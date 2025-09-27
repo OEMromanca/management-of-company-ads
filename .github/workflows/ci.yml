@@ -55,7 +55,7 @@ jobs:
         env:
           MONGO_URI: ${{ secrets.MONGO_URI }}
           PORT: 5000
-        run: npx cypress run --config-file cypress.config.ts
+        run: npm run cy:all
 
       - name: Show backend server log if failure
         if: failure()
