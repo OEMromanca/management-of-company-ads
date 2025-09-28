@@ -21,7 +21,13 @@ export default function ModalComponent({
   };
 
   return (
-    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+    <Dialog
+      open={open}
+      onClose={handleClose}
+      maxWidth="sm"
+      fullWidth
+      data-testid="modal-dialog"
+    >
       {title && <DialogTitle>{title}</DialogTitle>}
 
       <DialogContent dividers>{children}</DialogContent>

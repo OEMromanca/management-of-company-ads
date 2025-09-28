@@ -24,7 +24,12 @@ export default function HeaderComponent() {
   return (
     <AppBar component="nav">
       <Toolbar>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1 }}
+          data-testid="ads-title"
+        >
           MUI Ads
         </Typography>
 
@@ -33,7 +38,7 @@ export default function HeaderComponent() {
           color="primary"
           onClick={handleOpenAdForm}
         >
-          <AddIcon sx={{ color: "white" }} />
+          <AddIcon sx={{ color: "white" }} data-testid="add-icon" />
         </ButtonComponent>
       </Toolbar>
     </AppBar>
