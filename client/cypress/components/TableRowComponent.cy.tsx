@@ -1,7 +1,9 @@
+/// <reference types="cypress" />
+
 import { TableRowComponent } from "../../src/components/TableRowComponent";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { mountWithProviders } from "../support/ mountWithProviders";
+import { mountWithProvidersOverrides } from "../support/mountWithProvidersOverrides";
 
 describe("<TableRowComponent />", () => {
   const data = [
@@ -23,10 +25,17 @@ describe("<TableRowComponent />", () => {
     },
   ];
 
-  const mountRow = (rows = data) => {
-    const toggleTop = cy.stub();
-    const edit = cy.stub();
-    const deleteStub = cy.stub();
+  const mountRow = (
+    rows = data,
+    overrides?: {
+      toggleTop?: Cypress.Agent<sinon.SinonStub>;
+      edit?: Cypress.Agent<sinon.SinonStub>;
+      deleteStub?: Cypress.Agent<sinon.SinonStub>;
+    }
+  ) => {
+    const toggleTop = overrides?.toggleTop || cy.stub();
+    const edit = overrides?.edit || cy.stub();
+    const deleteStub = overrides?.deleteStub || cy.stub();
 
     const columns = [
       {
@@ -75,7 +84,7 @@ describe("<TableRowComponent />", () => {
       },
     ];
 
-    mountWithProviders(
+    mountWithProvidersOverrides(
       <table>
         <tbody>
           {rows.map((row, i) => (

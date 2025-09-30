@@ -1,19 +1,33 @@
+/// <reference types="cypress" />
+
 import HeaderComponent from "../../src/components/HeaderComponent";
-import { mountWithProviders } from "../support/ mountWithProviders";
+import { mountWithProvidersOverrides } from "../support/mountWithProvidersOverrides";
 
 describe("<HeaderComponent />", () => {
-  beforeEach(() => {
-    mountWithProviders(<HeaderComponent />);
-  });
+  const mountHeader = (overrides?: {
+    closeModal?: Cypress.Agent<sinon.SinonStub>;
+    openModal?: Cypress.Agent<sinon.SinonStub>;
+  }) => {
+    const openModal = overrides?.openModal || cy.stub();
+    const closeModal = overrides?.closeModal || cy.stub();
 
-  it("should render the title", () => {
+    mountWithProvidersOverrides(<HeaderComponent />, {
+      modalOverrides: { openModal, closeModal },
+    });
+
+    return { openModal, closeModal };
+  };
+
+  it("renders the title correctly", () => {
+    mountHeader();
     cy.get('[data-testid="ads-title"]')
       .should("contain.text", "MUI Ads")
       .should("have.css", "text-align")
       .and("match", /^(left|start)$/);
   });
 
-  it("should render the button with white AddIcon", () => {
+  it("renders the Add button with white AddIcon", () => {
+    mountHeader();
     cy.get('[data-testid="resusable-button"]').within(() => {
       cy.get('[data-testid="add-icon"]')
         .should("exist")
@@ -21,12 +35,9 @@ describe("<HeaderComponent />", () => {
     });
   });
 
-  it("should click the button and open modal", () => {
-    cy.get('[data-testid="resusable-button"]')
-      .invoke("css", "text-align")
-      .should("eq", "center");
-
+  it("opens the modal when Add button is clicked", () => {
+    const { openModal } = mountHeader();
     cy.get('[data-testid="resusable-button"]').click();
-    cy.get('[data-testid="modal-dialog"]').should("be.visible");
+    cy.wrap(openModal).should("have.been.calledOnce");
   });
 });

@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 
 import TableComponent from "../../src/components/TableComponent";
-import { mountWithProviders } from "../support/ mountWithProviders";
+import { mountWithProvidersOverrides } from "../support/mountWithProvidersOverrides";
 
 describe("TableComponent", () => {
   const columns = [
@@ -20,12 +20,16 @@ describe("TableComponent", () => {
     customData = data,
     customPage = 0,
     customRowsPerPage = 10,
-    customTotal = data.length
+    customTotal = data.length,
+    overrides?: {
+      onChangePage?: Cypress.Agent<sinon.SinonStub>;
+      onChangeRowsPerPage?: Cypress.Agent<sinon.SinonStub>;
+    }
   ) => {
-    const onChangePage = cy.stub();
-    const onChangeRowsPerPage = cy.stub();
+    const onChangePage = overrides?.onChangePage || cy.stub();
+    const onChangeRowsPerPage = overrides?.onChangeRowsPerPage || cy.stub();
 
-    mountWithProviders(
+    mountWithProvidersOverrides(
       <TableComponent
         data={customData}
         columns={columns}
@@ -53,7 +57,7 @@ describe("TableComponent", () => {
 
     cy.get("tbody tr").should("have.length", data.length);
 
-    data.map((row, rowIndex) => {
+    data.forEach((row, rowIndex) => {
       cy.get("tbody tr")
         .eq(rowIndex)
         .within(() => {
@@ -75,7 +79,6 @@ describe("TableComponent", () => {
     const { onChangeRowsPerPage } = mountTable([], 0, 25, 50);
 
     cy.get(".MuiTablePagination-select").first().click();
-
     cy.get("li[role='option']")
       .contains("10")
       .should("be.visible")
@@ -88,7 +91,7 @@ describe("TableComponent", () => {
     mountTable([], 0, 10, 0);
 
     cy.get("tbody tr").should("have.length", 0);
-    columns.map((col) => {
+    columns.forEach((col) => {
       cy.get("th").contains(col.label).should("exist");
     });
   });

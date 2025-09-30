@@ -18,7 +18,7 @@ import {
 import { toast } from "react-toastify";
 import { resetForm, validateFile } from "../utils/fileUtils";
 
-interface CompaniesContextType {
+export interface CompaniesContextType {
   formData: FormData;
   setFormData: React.Dispatch<React.SetStateAction<FormData>>;
   logo: File | null;
@@ -51,7 +51,7 @@ interface CompaniesContextType {
   handleToggleTopAd: (advertId: string) => Promise<void>;
 }
 
-const CompaniesContext = createContext<CompaniesContextType | undefined>(
+export const CompaniesContext = createContext<CompaniesContextType | undefined>(
   undefined
 );
 

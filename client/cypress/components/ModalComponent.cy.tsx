@@ -1,15 +1,22 @@
 /// <reference types="cypress" />
 
 import ModalComponent from "../../src/components/ModalComponent";
-import { mountWithProviders } from "../support/ mountWithProviders";
+import { mountWithProvidersOverrides } from "../support/mountWithProvidersOverrides";
 
 describe("ModalComponent", () => {
-  const mountModal = (open = true) => {
-    const onClose = cy.stub();
-    const onCancel = cy.stub();
-    const childButtonClick = cy.stub();
+  const mountModal = (
+    open = true,
+    overrides?: {
+      onClose?: Cypress.Agent<sinon.SinonStub>;
+      onCancel?: Cypress.Agent<sinon.SinonStub>;
+      childButtonClick?: Cypress.Agent<sinon.SinonStub>;
+    }
+  ) => {
+    const onClose = overrides?.onClose || cy.stub();
+    const onCancel = overrides?.onCancel || cy.stub();
+    const childButtonClick = overrides?.childButtonClick || cy.stub();
 
-    mountWithProviders(
+    mountWithProvidersOverrides(
       <ModalComponent
         open={open}
         title="Test Title"
@@ -37,8 +44,11 @@ describe("ModalComponent", () => {
     return { onClose, onCancel, childButtonClick };
   };
 
-  it("should render the modal and children content", () => {
+  beforeEach(() => {
     mountModal();
+  });
+
+  it("renders the modal and children content", () => {
     cy.get('[data-testid="modal-dialog"]').should("be.visible");
     cy.get('[data-testid="modal-children-text"]').should(
       "contain.text",
@@ -47,27 +57,27 @@ describe("ModalComponent", () => {
     cy.get('[data-testid="modal-children-button"]').should("be.visible");
   });
 
-  it("should call child button click handler", () => {
+  it("calls child button click handler", () => {
     const { childButtonClick } = mountModal();
     cy.get('[data-testid="modal-children-button"]').click();
     cy.wrap(childButtonClick).should("have.been.calledOnce");
   });
 
-  it("should close the modal when clicking outside (backdrop)", () => {
+  it("calls onClose and onCancel when clicking backdrop", () => {
     const { onClose, onCancel } = mountModal();
     cy.get(".MuiBackdrop-root").click({ force: true });
     cy.wrap(onClose).should("have.been.calledOnce");
     cy.wrap(onCancel).should("have.been.calledOnce");
   });
 
-  it("should call onClose and onCancel when cancel button is clicked", () => {
+  it("calls onClose and onCancel when cancel button is clicked", () => {
     const { onClose, onCancel } = mountModal();
     cy.get('[data-testid="modal-cancel-button"]').click();
     cy.wrap(onClose).should("have.been.calledOnce");
     cy.wrap(onCancel).should("have.been.calledOnce");
   });
 
-  it("should not render the modal when open is false", () => {
+  it("does not render modal when open is false", () => {
     const { onClose, onCancel } = mountModal(false);
     cy.get('[data-testid="modal-dialog"]').should("not.exist");
     cy.wrap(onClose).should("not.have.been.called");
